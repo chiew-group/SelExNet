@@ -38,7 +38,7 @@ SelExNet is a self-supervised framework for 2D spatially selective excitation th
 The framework designs RF pulses and parameterized variable-density spiral gradient waveforms for both single- (sTx) and multi-channel (pTx) transmission, and supports patient-specific adaptation using measured, previously unseen <em>B</em><sub>0</sub> and
 <em>B</em><sub>1</sub><sup>+</sup> maps. Joint RF-Gradient optimization improves excitation fidelity over RF-only optimization. In phantom experiments, patient-specific fine-tuning restores target geometry and uniformity under field inhomogeneity. In-vivo studies demonstrate anatomically precise excitation, sharper target boundaries, and reduced off-target signal.
 
-![SelExNet](./assets/workflow.png)
-
-<figcaption align = "center"><b>Figure 1. Overview of SelExNet Framework. 
-  </b></figcaption>
+<div align="center">
+  <img src="./assets/workflow.png" alt="SelExNet Workflow" width="1000">
+  <b>Figure 1: Overview of SelExNet Framework.</b>
+</div>
