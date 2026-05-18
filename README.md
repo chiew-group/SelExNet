@@ -16,7 +16,7 @@
 
 ## News
 
-**2026.05.02** - Our paper is accepted by **Magnetic Resonance in Medicine 2026 (MRM 2026), code is coming soon.**.
+**2026.05.02** - Our paper is accepted by **Magnetic Resonance in Medicine 2026, code is coming soon.**.
 
 ## Abstract
 
