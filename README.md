@@ -24,7 +24,8 @@
   <a href="#abstract">Abstract</a> |
   <a href="#installation">Installation</a> |
   <a href="#train">Train</a> |
-  <a href="#finetune">Finetune</a>
+  <a href="#finetune">Finetune</a> |
+  <a href="#citation">Citation</a>
 </p>
 
 ## News
