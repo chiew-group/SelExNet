@@ -1,6 +1,6 @@
 <h1 align="center"> [MRM 2026] SelExNet: A Self-Supervised Physics-Informed Framework for Multi-Channel Joint RF and Gradient Waveform Optimization in 2D Spatially Selective Excitation </h1>
 <p align="center">
-<a href="[https://aao-hnsfjournals.onlinelibrary.wiley.com/doi/10.1002/ohn.868](https://onlinelibrary.wiley.com/doi/10.1002/mrm.70431)"><img src="https://img.shields.io/badge/Wiley-Paper-red"></a>
+<a href="https://onlinelibrary.wiley.com/doi/10.1002/mrm.70431"><img src="https://img.shields.io/badge/Wiley-Paper-red"></a>
 <!-- <a href="https://pubmed.ncbi.nlm.nih.gov/38922721/"><img src="https://img.shields.io/badge/PubMed-Link-blue"></a> -->
 <a href="https://github.com/chiew-group/SelExNet"><img src="https://img.shields.io/badge/Code-Page-magenta"></a>
 </p>
@@ -16,7 +16,7 @@
 
 ## News
 
-**2026.05.02** - Our paper is accepted by **Magnetic Resonance in Medicine 2026, code is coming soon.**.
+**2026.05.02** - Our paper is accepted by **Magnetic Resonance in Medicine 2026**, code is coming soon.
 
 ## Abstract
 
