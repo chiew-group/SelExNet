@@ -39,6 +39,6 @@ The framework designs RF pulses and parameterized variable-density spiral gradie
 <em>B</em><sub>1</sub><sup>+</sup> maps. Joint RF-Gradient optimization improves excitation fidelity over RF-only optimization. In phantom experiments, patient-specific fine-tuning restores target geometry and uniformity under field inhomogeneity. In-vivo studies demonstrate anatomically precise excitation, sharper target boundaries, and reduced off-target signal.
 
 <div align="center">
-  <img src="./assets/workflow.png" alt="SelExNet Workflow" width="1000">
+  <img src="./assets/workflow.png" alt="SelExNet Workflow" width="800"><br>
   <b>Figure 1: Overview of SelExNet Framework.</b>
 </div>
