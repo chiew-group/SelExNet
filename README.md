@@ -2,7 +2,7 @@
 
 <p align="center">
 <a href="https://onlinelibrary.wiley.com/doi/10.1002/mrm.70431"><img src="https://img.shields.io/badge/Wiley-Paper-red"></a>
-<a href="https://github.com/chiew-group/SelExNet"><img src="https://img.shields.io/badge/Code-Page-magenta"></a>
+<a href="http://yuliangxiao.com/SelExNet-Webpage/"><img src="https://img.shields.io/badge/Web-Page-magenta"></a>
 </p>
 
 <div align="center">
