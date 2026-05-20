@@ -154,7 +154,7 @@ After training the model, you can fine-tune it on the unseen field maps to furth
 ```bash
 python finetune.py \
 --cfg configs/finetune_config.yaml \
---finetune_weights path/to/finetune/checkpoint.pt
+--finetune_weights <path/to/finetune/pretrained.pt>
 ```
 
 For demo, the `--finetune_weights` should be set to `data/finetune/pretrained/pretrained.pt`. The configuration file is in `YAML` format. You can find an example configuration file at `configs/finetune_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the fine-tuning outputs, including the fine-tuned model checkpoints and the fine-tuning logs, will be saved in the `outputs/exp_name` directory. Once the fine-tuning is done, you can use the fine-tuned model for inference on the target excitation shape and field maps.
@@ -162,8 +162,8 @@ For demo, the `--finetune_weights` should be set to `data/finetune/pretrained/pr
 ```bash
 python test_single.py \
 --cfg configs/finetune_config.yaml \
---output_dir path/to/output/dir \
---img_path path/to/shape/image.png
+--output_dir <path/to/output/dir> \
+--img_path <path/to/shape/image.png>
 ```
 
 In the demo, the `--output_dir` is set to `demo/` and `--img_path` should be `data/finetune/dataset/shape.png`. Finally, the simulated excitation pattern, and tailored RF and gradient waveforms will be saved in `demo/` directory.
