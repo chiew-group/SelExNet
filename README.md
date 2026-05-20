@@ -147,7 +147,7 @@ After training the model, you can fine-tune it on the unseen field maps to furth
 - [Example phantom mask](https://drive.google.com/file/d/17pSShyDPUAjQVSgE6IGMLer60wP0Apln/view?usp=sharing): place it in the `data/finetune/fm/` directory.
 
 > [!IMPORTANT]
-> Make a copy of excitation shape image to the `data/finetune/dataset/` directory for fine-tuning (see the example fine-tune dataset). This is due to the fact that the fine-tuning is a kind of overfitting process which needs same image for both training and validation.
+> Make a copy of excitation shape image to the `data/finetune/dataset/` directory for fine-tuning (see the example in `data/finetune/dataset/`). This is due to the fact that the fine-tuning is a kind of overfitting process which needs same image for both training and validation.
 
 ### Finetune the model
 
@@ -157,7 +157,7 @@ python finetune.py \
 --finetune_weights path/to/finetune/checkpoint.pt
 ```
 
-For demo purpose, the `--finetune_weights` should be set to `data/finetune/pretrained/pretrained.pt`. The configuration file is in `YAML` format. You can find an example configuration file at `configs/finetune_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the fine-tuning outputs, including the fine-tuned model checkpoints and the fine-tuning logs, will be saved in the `outputs/exp_name` directory. Once the fine-tuning is done, you can use the fine-tuned model for inference on the target excitation shape and field maps.
+For demo, the `--finetune_weights` should be set to `data/finetune/pretrained/pretrained.pt`. The configuration file is in `YAML` format. You can find an example configuration file at `configs/finetune_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the fine-tuning outputs, including the fine-tuned model checkpoints and the fine-tuning logs, will be saved in the `outputs/exp_name` directory. Once the fine-tuning is done, you can use the fine-tuned model for inference on the target excitation shape and field maps.
 
 ```bash
 python test_single.py \

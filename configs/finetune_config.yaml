@@ -1,9 +1,9 @@
 experiment: Joint Optimization for 2D RF & Gradient Pulse Design
-exp_name: exp_pTx_G_RF_SI_0520_7ms # experiment name for logging and checkpointing
+exp_name: exp_pTx_G_RF_example_7ms_finetune # experiment name for logging and checkpointing
 
 # dataset parameters
 image:
-  dir: data/train/dataset # directory containing training images
+  dir: data/finetune/dataset # directory containing training images
   fov: [0.28, 0.28] # FOV in meters
   N: [64, 64] # image resolution
 
@@ -16,9 +16,9 @@ magnet:
   fa: 90 # flip angle in degrees
   rf_scale: 4e-1 # scaling factor for RF amplitude (need to tune it in a reasonable range for training)
   use_fm_generator: false # true/false <=> multi-map/single-map mode
-  grad_path: data/train/fm/Gpulse_JR_kmax_70.txt # gradient waveform for RF-only optimization
-  si_path: data/train/fm/example.npz # path to field maps
-  mask_path: data/train/fm/example_mask.npy # path to loading mask, null if do not use mask
+  grad_path: data/finetune/fm/Gpulse_JR_kmax_70.txt # gradient waveform for RF-only optimization
+  si_path: data/finetune/fm/example.npz # path to field maps
+  mask_path: data/finetune/fm/example_mask.npy # path to loading mask, null if do not use mask
   gmax: 4.2e-2 # maximum gradient amplitude in T/m
   smax: 2.25e+2 # maximum slew rate in T/m/s
   offset_hz: 0 # off-resonance frequency in Hz
@@ -37,12 +37,12 @@ train:
   deterministic: false # true for ablation/debug, false for production
   seed: 123 # random seed for reproducibility
   joint: true # true for joint optimization, false for RF-only optimization
-  num_samples: 8000 # number of training samples
-  batch_size: 64 # batch size for training
-  epochs: 800 # number of training epochs
+  num_samples: 2 # number of training samples, only 2 for finetuning
+  batch_size: 1 # batch size for training, only 1 for finetuning
+  epochs: 400 # number of training epochs, usually 400 is enough for finetuning
   fm_resample_every_epochs: 50 # resample every N epochs to keep stable training
   lr: 1e-3 # learning rate
-  dropout: 1e-1 # dropout rate for regularization
+  dropout: 0.0 # dropout rate for regularization, usually no dropout for finetuning
   val_iter: 1 # number of validation iterations per epoch
   grad_clip_norm: 0.0 # max norm for gradient clipping, 0 for no clipping
   lambda_ssim: 1.0 # weight for SSIM loss
