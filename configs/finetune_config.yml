@@ -1,0 +1,55 @@
+experiment: Joint Optimization for 2D RF & Gradient Pulse Design
+exp_name: exp_pTx_G_RF_SI_0520_7ms_finetune # experiment name for logging and checkpointing
+
+# dataset parameters
+image:
+  dir: data/finetune/dataset # directory containing training images
+  fov: [0.28, 0.28] # FOV in meters
+  N: [64, 64] # image resolution
+
+# magnet parameters
+magnet:
+  ex_mode: 2 # 2: 2D excitation, 3: 3D excitation (not supported yet)
+  tx: 8 # number of transmit channels
+  gamma: 2.67522e+8 # gyromagnetic ratio in rad/s/T
+  tp: 7.15e-3 # pulse duration in seconds
+  fa: 90 # flip angle in degrees
+  rf_scale: 4e-1 # scaling factor for RF amplitude (need to tune it in a reasonable range for training)
+  use_fm_generator: false # true/false <=> multi-map/single-map mode
+  grad_path: data/finetune/fm/Gpulse_JR_kmax_70.txt # gradient waveform for RF-only optimization
+  si_path: data/finetune/fm/example.npz # path to field maps
+  mask_path: data/finetune/fm/example_mask.npy # path to loading mask, null if do not use mask
+  gmax: 4.2e-2 # maximum gradient amplitude in T/m
+  smax: 2.25e+2 # maximum slew rate in T/m/s
+  offset_hz: 0 # off-resonance frequency in Hz
+  block_steps: 256 # number of time steps in each block for training
+
+# model parameters
+model:
+  in_dim: 3 # number of input channels (b0, b1_real, b1_imag)
+  rf_output_dim: 1430 # number of time steps for RF pulse, ratersing time is 5us
+  grad_output_dim: 4 # number of low-dimensinal parameters to represent the gradient waveform
+  norm: group # normalization type: group, layer, or none
+  act: swish # activation function: swish, relu, or gelu
+  block: [3, 4, 6, 3] # number of residual blocks in each stage
+
+train:
+  deterministic: false # true for ablation/debug, false for production
+  seed: 123 # random seed for reproducibility
+  joint: true # true for joint optimization, false for RF-only optimization
+  num_samples: 2 # number of training samples, only 2 for finetuning
+  batch_size: 1 # batch size for training, only 1 for finetuning
+  epochs: 400 # number of training epochs, usually 400 is enough for finetuning
+  fm_resample_every_epochs: 50 # resample every N epochs to keep stable training
+  lr: 1e-3 # learning rate
+  dropout: 0.0 # dropout rate for regularization, usually no dropout for finetuning
+  val_iter: 1 # number of validation iterations per epoch
+  grad_clip_norm: 0.0 # max norm for gradient clipping, 0 for no clipping
+  lambda_ssim: 1.0 # weight for SSIM loss
+  lambda_psnr: 1.0 # weight for PSNR loss
+  lambda_rmse: 1.0 # weight for RMSE loss
+  lambda_iou: 1.0 # weight for IoU loss
+  lambda_rf_re_amp: 1e-1 # weight for RF real amplitude regularization
+  lambda_rf_im_amp: 1e-1 # weight for RF imag amplitude regularization
+  lambda_rf_re_smooth: 1e-1 # weight for RF real smoothness regularization
+  lambda_rf_im_smooth: 1e-2 # weight for RF imag smoothness regularization
