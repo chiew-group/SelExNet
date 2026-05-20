@@ -134,11 +134,11 @@ torchrun --nproc_per_node=<num_gpus> --standalone main.py \
 --ddp # use distributed data parallel training
 ```
 
-The configuration file is in YAML format. You can find an example configuration file at `configs/train_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the training outputs, including the trained model checkpoints and the training logs, will be saved in the `outputs/exp_name` directory.
+The configuration file is in `YAML` format. You can find an example configuration file at `configs/train_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the training outputs, including the trained model checkpoints and the training logs, will be saved in the `outputs/exp_name` directory.
 
 ## Finetune
 
-After training the model, you can fine-tune it on the unseen field maps to further improve the excitation performance. We provided pretrained weights, field maps and example shape which can be used for fine-tuning. You can download them:
+After training the model, you can fine-tune it on the unseen field maps to further improve the excitation performance. We provided pretrained weights, example field maps and shape which can be used for fine-tuning. You can download them:
 
 - [Pretrained weights](https://drive.google.com/file/d/1NygxKzWy38TgDMXBbbckgFKDoBgFsCSG/view?usp=sharing): place it in the `data/finetune/pretrained/` directory.
 
@@ -147,7 +147,7 @@ After training the model, you can fine-tune it on the unseen field maps to furth
 - [Example phantom mask](https://drive.google.com/file/d/17pSShyDPUAjQVSgE6IGMLer60wP0Apln/view?usp=sharing): place it in the `data/finetune/fm/` directory.
 
 > [!IMPORTANT]
-> Make a copy of excitation shape image to the `data/finetune/dataset/` directory for fine-tuning. This is due to the fact that the fine-tuning is a kind of overfitting process which needs same image for both training and validation.
+> Make a copy of excitation shape image to the `data/finetune/dataset/` directory for fine-tuning (see the example fine-tune dataset). This is due to the fact that the fine-tuning is a kind of overfitting process which needs same image for both training and validation.
 
 ### Finetune the model
 
@@ -157,7 +157,7 @@ python finetune.py \
 --finetune_weights path/to/finetune/checkpoint.pt
 ```
 
-All the fine-tuning outputs, including the fine-tuned model checkpoints and the fine-tuning logs, will be saved in the `outputs/exp_name` directory. Once the fine-tuning is done, you can use the fine-tuned model for inference on the target field maps.
+For demo purpose, the `--finetune_weights` should be set to `data/finetune/pretrained/pretrained.pt`. The configuration file is in `YAML` format. You can find an example configuration file at `configs/finetune_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the fine-tuning outputs, including the fine-tuned model checkpoints and the fine-tuning logs, will be saved in the `outputs/exp_name` directory. Once the fine-tuning is done, you can use the fine-tuned model for inference on the target excitation shape and field maps.
 
 ```bash
 python test_single.py \
@@ -165,6 +165,8 @@ python test_single.py \
 --output_dir path/to/output/dir \
 --img_path path/to/shape/image.png
 ```
+
+In the demo, the `--output_dir` is set to `demo/` and `--img_path` should be `data/finetune/dataset/shape.png`. Finally, the simulated excitation pattern, and tailored RF and gradient waveforms will be saved in `demo/` directory.
 
 > [!NOTE]
 > The designed RF and gradient waveforms will be saved in `.mat` format which is compatible with the native Siemens pTx workflow. If you need to use on other platforms, you should manually convert them to the required format.
