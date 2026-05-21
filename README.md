@@ -141,15 +141,15 @@ The dataset for this project is simple which are just binary masks with differen
   - b1_imag: (Tx, H, W) array of imaginary part of B1+ map
 
 - multi-map (npz format with keys: `b0_{mode}`, `b1_real_{mode}`, `b1_imag_{mode}` where the mode can be `train`, `valid` or `test`, unit is `Tesla`):
-  - b0_train: (N_train, H, W) array of B0 maps for training
-  - b0_valid: (N_valid, H, W) array of B0 maps for validation
-  - b0_test: (N_test, H, W) array of B0 maps for testing
-  - b1_real_train: (N_train, Tx, H, W) array of real part of B1+ maps for training
-  - b1_imag_train: (N_train, Tx, H, W) array of imaginary part of B1+ maps for training
-  - b1_real_valid: (N_valid, Tx, H, W) array of real part of B1+ maps for validation
-  - b1_imag_valid: (N_valid, Tx, H, W) array of imaginary part of B1+ maps for validation
-  - b1_real_test: (N_test, Tx, H, W) array of real part of B1+ maps for testing
-  - b1_imag_test: (N_test, Tx, H, W) array of imaginary part of B1+ maps for testing
+  - b0_train: `(N_train, H, W)` array of B0 maps for training
+  - b0_valid: `(N_valid, H, W)` array of B0 maps for validation
+  - b0_test: `(N_test, H, W)` array of B0 maps for testing
+  - b1_real_train: `(N_train, Tx, H, W)` array of real part of B1+ maps for training
+  - b1_imag_train: `(N_train, Tx, H, W)` array of imaginary part of B1+ maps for training
+  - b1_real_valid: `(N_valid, Tx, H, W)` array of real part of B1+ maps for validation
+  - b1_imag_valid: `(N_valid, Tx, H, W)` array of imaginary part of B1+ maps for validation
+  - b1_real_test: `(N_test, Tx, H, W)` array of real part of B1+ maps for testing
+  - b1_imag_test: `(N_test, Tx, H, W)` array of imaginary part of B1+ maps for testing
 
 > [!TIP]
 > The `single-map` mode is for training a model that is specific to the provided field maps, while the `multi-map` mode is for training a model that can adapt to unseen field maps. For the `multi-map` mode in our experiments, we found it is not easy and stable to optimize a model that can adapt to large sets of field maps. We highly recommend using a small sets or `single-map` mode for training, and then fine-tuning the model on the target field maps.
@@ -228,7 +228,7 @@ In the demo, the `--output_dir` is set to `demo/` and `--img_path` should be `da
 If you find this code useful for your research, please consider citing our paper:
 
 ```bibtex
-@article{Xiao2026SelExNet,
+@article{xiao2026selexnet,
   title={SelExNet: A Self-Supervised Physics-Informed Framework for Multi-Channel Joint RF and Gradient Waveform Optimization in 2D Spatially Selective Excitation},
   author={Yuliang Xiao and Jason Rock and Zhe Wu and Jamie Near and Mark Chiew and Simon J. Graham},
   journal={Magnetic Resonance in Medicine},
