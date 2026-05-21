@@ -23,6 +23,11 @@ magnet:
   smax: 2.25e+2 # maximum slew rate in T/m/s
   offset_hz: 0 # off-resonance frequency in Hz
   block_steps: 256 # number of time steps in each block for training
+  ktraj: # scale factors for calculating k-space trajectory from low-dimensional gradient parameters, need to tune them in a reasonable range for different pulse durations and gradient constraints
+    n_turns: [15, 10] # slope and intercept for calculating number of turns in the spiral trajectory, n_turns = slope * grad_output[0] + intercept
+    alpha: [2.0, 0.5] # slope and intercept for calculating radial density factor, alpha = slope * grad_output[1] + intercept
+    beta: [2.0, 0.5] # slope and intercept for calculating angular density factor, beta = slope * grad_output[2] + intercept
+    kmax_factor: [2.0, 0.5] # slope and intercept for calculating kmax factor, kmax_factor = slope * grad_output[3] + intercept
 
 # model parameters
 model:

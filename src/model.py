@@ -68,11 +68,18 @@ def generate_spiral_trajectory_gradients(params, cfg):
     Returns:
         kx, ky (torch.Tensor): K-space trajectories.
     """
-    n_turns = params[:, 0].unsqueeze(1) * 15.0 + 10.0  # number of turns [10, 25]
-    alpha = params[:, 1].unsqueeze(1) * 2.0 + 0.5  # radial density factor [0.5, 2.5]
-    beta = params[:, 2].unsqueeze(1) * 2.0 + 0.5  # angular speed factor [0.5, 2.5]
-    kmax_factor = params[:, 3].unsqueeze(1) * 2.0 + 0.5  # kmax factor [0.5, 2.5]
-    # print(f"N_turns: {n_turns.detach().cpu().numpy()[0,0]}, Alpha: {alpha.detach().cpu().numpy()[0,0]}, Beta: {beta.detach().cpu().numpy()[0,0]}")
+    n_turns = params[:, 0].unsqueeze(1) * float(cfg.magnet.ktraj.n_turns[0]) + float(
+        cfg.magnet.ktraj.n_turns[1]
+    )
+    alpha = params[:, 1].unsqueeze(1) * float(cfg.magnet.ktraj.alpha[0]) + float(
+        cfg.magnet.ktraj.alpha[1]
+    )
+    beta = params[:, 2].unsqueeze(1) * float(cfg.magnet.ktraj.beta[0]) + float(
+        cfg.magnet.ktraj.beta[1]
+    )
+    kmax_factor = params[:, 3].unsqueeze(1) * float(
+        cfg.magnet.ktraj.kmax_factor[0]
+    ) + float(cfg.magnet.ktraj.kmax_factor[1])
     T = cfg.magnet.tp
     num_points = cfg.model.rf_output_dim // 2
     gamma = cfg.magnet.gamma / (2 * torch.pi)  # rad⋅s^-1⋅T^-1
