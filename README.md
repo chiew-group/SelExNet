@@ -47,7 +47,7 @@ The framework designs RF pulses and parameterized variable-density spiral gradie
 
 ## Installation
 
-Anaconda is recommended for package management. Create and activate a Python environment:
+`conda` is recommended for package management. Create and activate a Python environment:
 
 ```bash
 conda create -n selexnet python=3.10
