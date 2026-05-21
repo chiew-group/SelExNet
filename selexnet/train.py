@@ -17,8 +17,14 @@ from torch.optim import lr_scheduler
 from tqdm.auto import tqdm
 # from pytorch_msssim import SSIM
 
-from src.utils import plot_progress, make_if_dont_exist, setup_logger, FMGenerator, SSIM
-from src.ddp import ddp_barrier, ddp_is_initialized
+from selexnet.utils import (
+    plot_progress,
+    make_if_dont_exist,
+    setup_logger,
+    FMGenerator,
+    SSIM,
+)
+from selexnet.ddp import ddp_barrier, ddp_is_initialized
 
 __all__ = ["Trainer"]
 

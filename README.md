@@ -47,11 +47,12 @@ The framework designs RF pulses and parameterized variable-density spiral gradie
 
 ## Installation
 
-`conda` is recommended for package management. Create and activate a Python environment:
+`conda` is recommended for creating the Python environment. After activating the environment, install `uv` and use it for faster package installation:
 
 ```bash
 conda create -n selexnet python=3.10
 conda activate selexnet
+pip install uv
 git clone https://github.com/chiew-group/SelExNet.git
 cd SelExNet
 ```
@@ -59,19 +60,70 @@ cd SelExNet
 Install SelExNet and its required dependencies from the repository root:
 
 ```bash
-pip install -e .
+uv pip install -e .
 ```
 
 For the optional imaging dependencies, install:
 
 ```bash
-pip install -e ".[all]"
+uv pip install -e ".[all]"
 ```
 
 For development tools, install:
 
 ```bash
-pip install -e ".[dev]"
+uv pip install -e ".[dev]"
+```
+
+### Dependencies
+
+<details open>
+
+<summary><b>Core dependencies (installed via <code>uv pip install -e .</code>)</b></summary>
+
+- torch
+- omegaconf
+- tqdm
+- scipy
+- numpy
+- pytorch-msssim
+- torch-pca
+- opencv-python
+- matplotlib
+- matplotlib-inline
+- Pillow
+
+</details>
+
+<details>
+
+<summary><b>Optional imaging dependencies (installed via <code>uv pip install -e ".[all]"</code>)</b></summary>
+
+- torchvision
+- pydicom
+- scikit-image
+- scikit-learn
+
+</details>
+
+<details>
+
+<summary><b>Development dependencies (installed via <code>uv pip install -e ".[dev]"</code>)</b></summary>
+
+- selexnet[all]
+- pytest
+- black
+- flake8
+- isort
+- mypy
+- jupyterlab
+
+</details>
+
+### Verify Installation
+
+```bash
+python -c "import selexnet; print(selexnet.__version__)"
 ```
 
 ## Train

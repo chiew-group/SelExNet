@@ -24,7 +24,15 @@ from .model import SelExNet
 from .blochsim import BlochSimTorch
 from .train import Trainer
 
+try:
+    from ._version import __version__, __version_tuple__
+except ModuleNotFoundError:
+    __version__ = "0+unknown"
+    __version_tuple__ = (0, "unknown")
+
 __all__ = [
+    "__version__",
+    "__version_tuple__",
     "resume_training",
     "plot_progress",
     "setup_logger",

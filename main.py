@@ -10,7 +10,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from omegaconf import OmegaConf
 
-from src import (
+from selexnet import (
     SelExNet,
     BlochSimTorch,
     Trainer,
@@ -26,7 +26,7 @@ from src import (
 
 def _load_tester():
     try:
-        from src.test import Tester
+        from selexnet.test import Tester
     except ModuleNotFoundError as exc:
         if exc.name == "src.test":
             raise ModuleNotFoundError(

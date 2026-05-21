@@ -16,7 +16,7 @@ import os
 import torch
 from PIL import Image
 import numpy as np
-from src import SelExNet, BlochSimTorch, SSIM, set_determinism, make_if_dont_exist
+from selexnet import SelExNet, BlochSimTorch, SSIM, set_determinism, make_if_dont_exist
 import matplotlib
 from typing import Tuple
 import torch.nn as nn

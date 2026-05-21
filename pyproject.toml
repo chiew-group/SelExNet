@@ -1,13 +1,10 @@
 [build-system]
-requires = [
-  "setuptools>=64.0.0",
-  "wheel",
-]
+requires = ["setuptools>=64.0.0", "wheel", "setuptools_scm>=8.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "SelExNet"
-version = "0.1.0"
+name = "selexnet"
+dynamic = ["version"]
 description = "Self-supervised Design of Joint RF and Gradient Pulse Sequences for 2D Spatially Selective Excitation in MRI"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -34,7 +31,7 @@ all = [
   "scikit-learn>=1.5",
 ]
 dev = [
-  "SelExNet[all]", # Include all dependencies for development
+  "selexnet[all]", # Include all dependencies for development
   "pytest",
   "black",
   "flake8",
@@ -44,9 +41,15 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["src"]
+packages = ["selexnet"]
 py-modules = ["main", "finetune"]
 
 [project.scripts]
 selexnet-train = "main:main"
 selexnet-finetune = "finetune:main"
+
+# ---- setuptools_scm configuration ----
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
+write_to = "selexnet/_version.py"
