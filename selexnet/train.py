@@ -68,6 +68,9 @@ class Trainer:
 
         # Losses
         self.iou = BinaryJaccardLossND(smooth=1e-8, per_channel=True)
+        
+        # Target FA (for conditional IoU loss)
+        self.target_fa = torch.sin(torch.deg2rad(torch.tensor(float(getattr(cfg.magnet, "fa", 90.0)))))
 
         # B0 / B1 maps (kept FP32)
         self.rf_scale = torch.tensor(
@@ -487,7 +490,12 @@ class Trainer:
         grad_loss = self._gradient_amplitude_penalty(
             gx, gy
         ) + self._gradient_slew_rate_penalty(gx, gy)
-        total = img_loss + pulse_loss + grad_loss + self.cfg.train.lambda_iou * iou_loss
+        total = img_loss + pulse_loss + grad_loss
+        
+        # IoU is meaningful when the target is a binary-ish mask scaled by sin(FA).
+        # Compare against the known target maximum instead of fragile float equality.
+        if abs(self.target_fa - 1.0) < 1e-4:
+            total = total + self.cfg.train.lambda_iou * iou_loss
 
         return total, cycle.item(), psnr.item(), ssim.item(), iou_loss.item()
 
