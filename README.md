@@ -42,7 +42,7 @@ The framework designs RF pulses and parameterized variable-density spiral gradie
 
 <div align="center">
   <img src="./assets/workflow.png" alt="SelExNet Workflow" width="800"><br>
-  <b>Figure 1: Overview of SelExNet Framework.</b>
+  <b>Figure 1: Overview of SelExNet framework.</b>
 </div>
 
 ## Installation
