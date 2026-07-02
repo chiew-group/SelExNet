@@ -230,7 +230,7 @@ If you find this code useful for your research, please consider citing our paper
 ```bibtex
 @article{xiao2026selexnet,
   title={SelExNet: A Self-Supervised Physics-Informed Framework for Multi-Channel Joint RF and Gradient Waveform Optimization in 2D Spatially Selective Excitation},
-  author={Yuliang Xiao and Jason Rock and Zhe Wu and Jamie Near and Mark Chiew and Simon J. Graham},
+  author={Xiao, Yuliang and Rock, Jason and Wu, Zhe and Near, Jamie and Chiew, Mark and Graham, Simon J.},
   journal={Magnetic Resonance in Medicine},
   volume = {96},
   number = {3},
