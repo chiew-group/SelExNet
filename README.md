@@ -232,7 +232,11 @@ If you find this code useful for your research, please consider citing our paper
   title={SelExNet: A Self-Supervised Physics-Informed Framework for Multi-Channel Joint RF and Gradient Waveform Optimization in 2D Spatially Selective Excitation},
   author={Yuliang Xiao and Jason Rock and Zhe Wu and Jamie Near and Mark Chiew and Simon J. Graham},
   journal={Magnetic Resonance in Medicine},
+  volume = {96},
+  number = {3},
+  pages = {1219-1234},
+  doi = {https://doi.org/10.1002/mrm.70431},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/mrm.70431},
   year={2026},
-  publisher={Wiley Online Library}
 }
 ```
