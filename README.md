@@ -234,9 +234,8 @@ If you find this code useful for your research, please consider citing our paper
   journal={Magnetic Resonance in Medicine},
   volume = {96},
   number = {3},
-  pages = {1219-1234},
+  pages = {1219--1234},
   doi = {https://doi.org/10.1002/mrm.70431},
-  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/mrm.70431},
   year={2026},
 }
 ```
