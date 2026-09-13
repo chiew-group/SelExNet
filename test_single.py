@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding=utf-8
 """
 Author       : Chris Xiao yl.xiao@mail.utoronto.ca
 Date         : 2025-03-28 16:55:13
@@ -13,18 +11,20 @@ Copyright (c) 2025 by Chris Xiao yl.xiao@mail.utoronto.ca, All Rights Reserved.
 
 import argparse
 import os
-import torch
-from PIL import Image
-import numpy as np
-from selexnet import SelExNet, BlochSimTorch, SSIM, set_determinism, make_if_dont_exist
+
 import matplotlib
-from typing import Tuple
-import torch.nn as nn
+import numpy as np
+import torch
 from omegaconf import OmegaConf
+from PIL import Image
 from scipy.io import savemat
+from selexnet.blochsim import BlochSimTorch
+from selexnet.determinism import set_determinism
+from selexnet.model import SelExNet
+from selexnet.utils import SSIM, make_if_dont_exist
+from torch import nn
 
 matplotlib.use("agg")
-
 
 SCALE = torch.tensor(1.0, dtype=torch.float32)
 
@@ -43,7 +43,7 @@ def downsample_gradient_for_export(
     g: torch.Tensor,
     source_raster: float,
     target_raster: float,
-) -> Tuple[torch.Tensor, int]:
+) -> tuple[torch.Tensor, int]:
     if target_raster <= 0:
         return g, 1
     ratio = float(target_raster) / float(source_raster)
@@ -73,7 +73,7 @@ def _compute_metrics(
     target_image: torch.Tensor,
     mask: torch.Tensor = None,
     smooth: float = 1e-8,
-) -> Tuple[float, float, float, float, float]:
+) -> tuple[float, float, float, float, float]:
     dims = _spatial_dims(simulated_image)  # reduce over spatial dims only
     max_val = torch.max(target_image)
     ssim_caller = SSIM(
@@ -228,11 +228,7 @@ def main():
         sy = torch.gradient(gy_down, spacing=10e-6, axis=-1)[0]
         sxy = torch.hypot(sx, sy)
         print(
-            "Max gradient slew rates (T/m/s): gx={:.2f}, gy={:.2f}, combined={:.2f}".format(
-                torch.max(torch.abs(sx)).item(),
-                torch.max(torch.abs(sy)).item(),
-                torch.max(torch.abs(sxy)).item(),
-            )
+            f"Max gradient slew rates (T/m/s): gx={torch.max(torch.abs(sx)).item():.2f}, gy={torch.max(torch.abs(sy)).item():.2f}, combined={torch.max(torch.abs(sxy)).item():.2f}"
         )
 
         gx_down = gx_down.squeeze().detach().cpu().numpy()  # [1430//factor_x]
