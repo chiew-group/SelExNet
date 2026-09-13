@@ -47,20 +47,21 @@ The framework designs RF pulses and parameterized variable-density spiral gradie
 
 ## Installation
 
-SelExNet uses Python 3.13 and [`uv`](https://docs.astral.sh/uv/) for Python,
-environment, dependency, and command management.
+SelExNet uses Python 3.13 and `uv` for Python,
+environment, dependency, and command management. Follow the link to install [`uv`](https://docs.astral.sh/uv/) if you do not have it.
+
 
 ```bash
 git clone https://github.com/chiew-group/SelExNet.git
 cd SelExNet
-uv sync --frozen --all-extras
+uv sync --frozen --no-dev
 ```
 
 ### Dependencies
 
 <details open>
 
-<summary><b>Core dependencies (installed via <code>uv pip install -e .</code>)</b></summary>
+<summary><b>Core dependencies (installed via <code>uv sync --frozen --no-dev</code>)</b></summary>
 
 - torch
 - omegaconf
@@ -78,7 +79,7 @@ uv sync --frozen --all-extras
 
 <details>
 
-<summary><b>Optional imaging dependencies (installed via <code>uv pip install -e ".[all]"</code>)</b></summary>
+<summary><b>Optional imaging dependencies (installed via <code>uv sync --frozen --extra all --no-dev</code>)</b></summary>
 
 - torchvision
 - pydicom
@@ -89,7 +90,7 @@ uv sync --frozen --all-extras
 
 <details>
 
-<summary><b>Development dependencies (installed via <code>uv pip install -e ".[dev]"</code>)</b></summary>
+<summary><b>Development dependencies (installed via <code>uv sync --frozen --all-extras</code>)</b></summary>
 
 - selexnet[all]
 - pytest
