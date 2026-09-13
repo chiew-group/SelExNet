@@ -2,27 +2,21 @@
 # coding=utf-8
 
 import argparse
-import os
+
 import torch
 import torch.distributed as dist
-from torch.utils.data import DataLoader, random_split
-from torch.utils.data.distributed import DistributedSampler
+from omegaconf import OmegaConf
+from selexnet.blochsim import BlochSimTorch
+from selexnet.dataset import ROIDataset
+from selexnet.ddp import _is_main_process, ddp_barrier, ddp_setup
+from selexnet.determinism import auto_num_workers, set_determinism
+from selexnet.model import SelExNet
+from selexnet.train import Trainer
+from selexnet.utils import resume_training
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-from omegaconf import OmegaConf
-
-from selexnet import (
-    SelExNet,
-    BlochSimTorch,
-    Trainer,
-    ROIDataset,
-    ddp_setup,
-    ddp_barrier,
-    _is_main_process,
-    set_determinism,
-    auto_num_workers,
-    resume_training,
-)
+from torch.utils.data import DataLoader, random_split
+from torch.utils.data.distributed import DistributedSampler
 
 
 def _load_tester():
