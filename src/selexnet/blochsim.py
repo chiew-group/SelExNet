@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
 """
 Optimized differentiable Bloch simulator with checkpointed time blocks (C3).
 
@@ -13,13 +12,13 @@ you can disable checkpointing for maximum speed.
 """
 
 from __future__ import annotations
-import math
-from typing import Sequence, Tuple
-import torch
-import torch.nn as nn
-from torch.utils.checkpoint import checkpoint
 
-__all__ = ["BlochSimTorch"]
+import math
+from collections.abc import Sequence
+
+import torch
+from torch import nn
+from torch.utils.checkpoint import checkpoint
 
 
 class BlochSimTorch(nn.Module):
@@ -71,7 +70,7 @@ class BlochSimTorch(nn.Module):
     # ------------------------
     def rotate_x(
         self, My: torch.Tensor, Mz: torch.Tensor, angle: torch.Tensor
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         cos_angle = torch.cos(angle)
         sin_angle = torch.sin(angle)
         My_new = My * cos_angle - Mz * sin_angle
@@ -80,7 +79,7 @@ class BlochSimTorch(nn.Module):
 
     def rotate_y(
         self, Mx: torch.Tensor, Mz: torch.Tensor, angle: torch.Tensor
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         cos_angle = torch.cos(angle)
         sin_angle = torch.sin(angle)
         Mx_new = Mx * cos_angle + Mz * sin_angle
@@ -89,7 +88,7 @@ class BlochSimTorch(nn.Module):
 
     def rotate_z(
         self, Mx: torch.Tensor, My: torch.Tensor, angle: torch.Tensor
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         cos_angle = torch.cos(angle)
         sin_angle = torch.sin(angle)
         Mx_new = Mx * cos_angle - My * sin_angle
@@ -108,7 +107,7 @@ class BlochSimTorch(nn.Module):
     # ------------------------
     # Grad file reader
     # ------------------------
-    def pulse_read(self) -> Tuple[torch.Tensor, torch.Tensor]:
+    def pulse_read(self) -> tuple[torch.Tensor, torch.Tensor]:
         g_x = []
         g_y = []
 
@@ -163,7 +162,7 @@ class BlochSimTorch(nn.Module):
         coil_imag: torch.Tensor,
         scaling_factor: torch.Tensor,
         offset: float = 0.0,
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         """
         Inputs:
             re, im: (B, T) real/imag RF waveform

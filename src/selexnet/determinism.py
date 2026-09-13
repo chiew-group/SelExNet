@@ -1,14 +1,9 @@
 #!/usr/bin/env python
-# coding=utf-8
 
 import os
+
 import torch
 import torch.distributed as dist
-
-__all__ = [
-    "set_determinism",
-    "auto_num_workers",
-]
 
 
 def auto_num_workers(world_size: int, max_workers: int = 8):

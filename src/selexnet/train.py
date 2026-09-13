@@ -1,32 +1,27 @@
 #!/usr/bin/env python
-# coding=utf-8
 
-import os
 import datetime
-from typing import Tuple
+import os
+
 import numpy as np
-from scipy import signal
-from omegaconf import DictConfig
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import torch.distributed as dist
+import torch.nn.functional as F
+from omegaconf import DictConfig
+from scipy import signal
+from torch import nn
+from torch.optim import Optimizer, lr_scheduler
 from torch.utils.data import DataLoader
-from torch.optim import Optimizer
-from torch.optim import lr_scheduler
 from tqdm.auto import tqdm
-# from pytorch_msssim import SSIM
 
-from selexnet.utils import (
-    plot_progress,
-    make_if_dont_exist,
-    setup_logger,
-    FMGenerator,
+from .ddp import ddp_barrier, ddp_is_initialized
+from .utils import (
     SSIM,
+    FMGenerator,
+    make_if_dont_exist,
+    plot_progress,
+    setup_logger,
 )
-from selexnet.ddp import ddp_barrier, ddp_is_initialized
-
-__all__ = ["Trainer"]
 
 
 class Trainer:
@@ -68,9 +63,11 @@ class Trainer:
 
         # Losses
         self.iou = BinaryJaccardLossND(smooth=1e-8, per_channel=True)
-        
+
         # Target FA (for conditional IoU loss)
-        self.target_fa = torch.sin(torch.deg2rad(torch.tensor(float(getattr(cfg.magnet, "fa", 90.0)))))
+        self.target_fa = torch.sin(
+            torch.deg2rad(torch.tensor(float(getattr(cfg.magnet, "fa", 90.0))))
+        )
 
         # B0 / B1 maps (kept FP32)
         self.rf_scale = torch.tensor(
@@ -491,7 +488,7 @@ class Trainer:
             gx, gy
         ) + self._gradient_slew_rate_penalty(gx, gy)
         total = img_loss + pulse_loss + grad_loss
-        
+
         # IoU is meaningful when the target is a binary-ish mask scaled by sin(FA).
         # Compare against the known target maximum instead of fragile float equality.
         if abs(self.target_fa - 1.0) < 1e-4:
@@ -504,7 +501,7 @@ class Trainer:
         simulated_image: torch.Tensor,
         target_image: torch.Tensor,
         smooth: float = 1e-8,
-    ) -> Tuple[float, float, float, float, float]:
+    ) -> tuple[float, float, float, float, float]:
         dims = _spatial_dims(simulated_image)  # reduce over spatial dims only
         max_val = torch.max(target_image)
         ssim_caller = SSIM(

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
 """
 Author       : Chris Xiao yl.xiao@mail.utoronto.ca
 Date         : 2025-03-03 19:57:27
@@ -11,21 +10,22 @@ I Love IU
 Copyright (c) 2025 by Chris Xiao yl.xiao@mail.utoronto.ca, All Rights Reserved.
 """
 
-import os
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-import shutil
 import logging
-from typing import Union, Sequence
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.optim.lr_scheduler import ReduceLROnPlateau
-from math import pi
 import math
-from torch_pca import PCA
+import os
+import shutil
 import warnings
+from collections.abc import Sequence
+from math import pi
+
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+import torch.nn.functional as F
+from torch import nn
+from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch_pca import PCA
 
 FILTER = {
     1: F.conv1d,
@@ -34,16 +34,6 @@ FILTER = {
 }
 
 plt.switch_backend("agg")
-
-__all__ = [
-    "resume_training",
-    "plot_progress",
-    "setup_logger",
-    "make_if_dont_exist",
-    "GaussianMixture",
-    "FMGenerator",
-    "SSIM",
-]
 
 
 def resume_training(
@@ -95,8 +85,8 @@ def resume_training(
 def plot_progress(
     logger: logging.Logger,
     save_dir: str,
-    train_loss: Sequence[Sequence[Union[int, float]]],
-    val_loss: Sequence[Sequence[Union[int, float]]],
+    train_loss: Sequence[Sequence[int | float]],
+    val_loss: Sequence[Sequence[int | float]],
     name: str,
 ) -> None:
     """

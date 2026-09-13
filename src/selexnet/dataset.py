@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
 """
 Author       : Chris Xiao yl.xiao@mail.utoronto.ca
 Date         : 2024-11-29 16:28:55
@@ -11,21 +10,14 @@ I Love IU
 Copyright (c) 2024 by Chris Xiao yl.xiao@mail.utoronto.ca, All Rights Reserved.
 """
 
-import torch
-from torch.utils.data import Dataset
-from scipy.spatial import ConvexHull
-import cv2
-import numpy as np
-from typing import Tuple, Dict, Optional, List
-from PIL import Image
 import glob
 
-__all__ = [
-    "apply_bilateral_filter",
-    "ROIDataset",
-    "ROIOldDataset",
-    "RandomContourDataset",
-]
+import cv2
+import numpy as np
+import torch
+from PIL import Image
+from scipy.spatial import ConvexHull
+from torch.utils.data import Dataset
 
 
 def apply_bilateral_filter(
@@ -42,7 +34,7 @@ class ROIDataset(Dataset):
         self,
         cfg,
         apply_bilateral_filter: bool = False,
-        filter_params: Optional[Dict[str, int]] = None,
+        filter_params: dict[str, int] | None = None,
     ) -> None:
         self.cfg = cfg
         self.apply_bilateral_filter = apply_bilateral_filter
@@ -56,7 +48,7 @@ class ROIDataset(Dataset):
             torch.deg2rad(torch.tensor(cfg.magnet.fa, dtype=torch.float32))
         )
 
-    def load_data(self) -> List:
+    def load_data(self) -> list:
         images = []
         for image_path in glob.glob(self.cfg.image.dir + "/*.png"):
             if len(images) >= int(self.cfg.train.num_samples):
@@ -70,7 +62,7 @@ class ROIDataset(Dataset):
     def __len__(self) -> int:
         return len(self.images)
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         raw_image = self.images[idx].astype(np.float32) / 255.0
         mask = (
             np.load(self.cfg.magnet.mask_path).astype(np.float32)
@@ -103,7 +95,7 @@ class ROIOldDataset(Dataset):
         self,
         cfg,
         apply_bilateral_filter: bool = False,
-        filter_params: Optional[Dict[str, int]] = None,
+        filter_params: dict[str, int] | None = None,
     ) -> None:
         self.cfg = cfg
         self.apply_bilateral_filter = apply_bilateral_filter
@@ -117,7 +109,7 @@ class ROIOldDataset(Dataset):
             torch.deg2rad(torch.tensor(cfg.magnet.fa, dtype=torch.float32))
         )
 
-    def load_data(self) -> List:
+    def load_data(self) -> list:
         images = []
         masks = []
         for image_path in glob.glob(self.cfg.image.dir + "/*.png"):
@@ -135,7 +127,7 @@ class ROIOldDataset(Dataset):
     def __len__(self) -> int:
         return len(self.images)
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         raw_image = self.images[idx].astype(np.float32) / 255.0
         mask = self.masks[idx].astype(np.float32) / 255.0
 
@@ -168,7 +160,7 @@ class RandomContourDataset(Dataset):
         num_samples: int = 1000,
         image_size: int = 64,
         apply_bilateral_filter: bool = False,
-        filter_params: Optional[Dict[str, int]] = None,
+        filter_params: dict[str, int] | None = None,
     ) -> None:
         self.num_samples = num_samples
         self.image_size = image_size
@@ -180,7 +172,7 @@ class RandomContourDataset(Dataset):
         )
         self.images = self._generate_images()
 
-    def _generate_images(self) -> List:
+    def _generate_images(self) -> list:
         images = []
         for _ in range(self.num_samples):
             image = np.zeros((self.image_size, self.image_size), dtype=np.uint8)
@@ -203,7 +195,7 @@ class RandomContourDataset(Dataset):
     def __len__(self) -> int:
         return self.num_samples
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
         raw_image = self.images[idx].astype(np.float32) / 255.0
 
         # Apply bilateral filter if required

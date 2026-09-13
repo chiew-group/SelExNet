@@ -47,32 +47,13 @@ The framework designs RF pulses and parameterized variable-density spiral gradie
 
 ## Installation
 
-`conda` is recommended for creating the Python environment. After activating the environment, install `uv` and use it for faster package installation:
+SelExNet uses Python 3.13 and [`uv`](https://docs.astral.sh/uv/) for Python,
+environment, dependency, and command management.
 
 ```bash
-conda create -n selexnet python=3.10
-conda activate selexnet
-pip install uv
 git clone https://github.com/chiew-group/SelExNet.git
 cd SelExNet
-```
-
-Install SelExNet and its required dependencies from the repository root:
-
-```bash
-uv pip install -e .
-```
-
-For the optional imaging dependencies, install:
-
-```bash
-uv pip install -e ".[all]"
-```
-
-For development tools, install:
-
-```bash
-uv pip install -e ".[dev]"
+uv sync --frozen --all-extras
 ```
 
 ### Dependencies
@@ -123,8 +104,10 @@ uv pip install -e ".[dev]"
 ### Verify Installation
 
 ```bash
-python -c "import selexnet; print(selexnet.__version__)"
+uv run python -c "import selexnet"
 ```
+
+if no error is raised, the installation is successful.
 
 ## Train
 
@@ -172,7 +155,7 @@ The dataset should be organized in the following structure:
 ### Train the model
 
 ```bash
-python main.py \
+uv run python main.py \
 --cfg configs/train_config.yaml \
 --resume # resume the training from the last checkpoint, otherwise ignore this flag
 ```
@@ -180,11 +163,14 @@ python main.py \
 If you have multiple GPUs, you can use distributed training to speed up the training process. You can launch it with the following command:
 
 ```bash
-torchrun --nproc_per_node=<num_gpus> --standalone main.py \
+uv run torchrun --nproc_per_node=<num_gpus> --standalone main.py \
 --cfg configs/train_config.yaml \
 --resume \  # resume the training from the last checkpoint, otherwise ignore this flag
 --ddp # use distributed data parallel training
 ```
+
+> [!NOTE]
+> If you use HPC clusters, `uv` may not wor properly on the compute nodes. You can maually activate the conda environment `source /path/to/.venv/bin/activate` and run the training script with `python main.py ...` command.
 
 The configuration file is in `YAML` format. You can find an example configuration file at `configs/train_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the training outputs, including the trained model checkpoints and the training logs, will be saved in the `outputs/exp_name` directory.
 
@@ -204,7 +190,7 @@ After training the model, you can fine-tune it on the unseen field maps to furth
 ### Finetune the model
 
 ```bash
-python finetune.py \
+uv run python finetune.py \
 --cfg configs/finetune_config.yaml \
 --finetune_weights <path/to/finetune/pretrained.pt>
 ```
@@ -212,7 +198,7 @@ python finetune.py \
 For demo, the `--finetune_weights` should be set to `data/finetune/pretrained/pretrained.pt`. The configuration file is in `YAML` format. You can find an example configuration file at `configs/finetune_config.yaml`. You can also modify the parameters in the configuration file according to your needs. All the fine-tuning outputs, including the fine-tuned model checkpoints and the fine-tuning logs, will be saved in the `outputs/exp_name` directory. Once the fine-tuning is done, you can use the fine-tuned model for inference on the target excitation shape and field maps.
 
 ```bash
-python test_single.py \
+uv run python test_single.py \
 --cfg configs/finetune_config.yaml \
 --output_dir <path/to/output/dir> \
 --img_path <path/to/shape/image.png>
