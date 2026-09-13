@@ -48,7 +48,7 @@ The framework designs RF pulses and parameterized variable-density spiral gradie
 ## Installation
 
 SelExNet uses Python 3.13 and `uv` for Python,
-environment, dependency, and command management. Follow the link to install [`uv`](https://docs.astral.sh/uv/) if you do not have it.
+environment, dependency, and command management. Follow the link to install [`uv`](https://docs.astral.sh/uv/getting-started/installation/) if you do not have it.
 
 
 ```bash
